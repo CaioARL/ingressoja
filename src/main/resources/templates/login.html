@@ -11,6 +11,9 @@
 
   <link rel="stylesheet" href="css/style.css">
 
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="/home.js"></script>
+
   <title>Login de Usuário</title>
 </head>
 
@@ -20,7 +23,7 @@
     <div class="mb-3">
       <label for="exampleInputEmail1" class="form-label">Email address</label>
       <input type="email" class="form-control" name="email" aria-describedby="emailHelp">
-      <div id="emailHelp" class="form-text">Nós nunca iremos compartilhar o seu e-mail com ninguém</div>
+      <div id="emailHelp" class="form-text" style="color: lightsalmon;">Nós nunca iremos compartilhar o seu e-mail com ninguém</div>
     </div>
 
     <div class="mb-3">
@@ -28,8 +31,13 @@
       <input type="password" class="form-control" name="senha">
     </div>
 
+    <div class="alert alert-danger" th:if="${userFind == false}">
+      <span>Login não encontrado</span>
+    </div>
+
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
+  
 </body>
 
 </html>
