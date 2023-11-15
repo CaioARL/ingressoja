@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 
 <head>
   <meta charset="UTF-8">
@@ -8,110 +8,14 @@
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-  <link rel="stylesheet" href="css/style.css">
 
-  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-  <script src="/home.js"></script>
+  <link rel="stylesheet" href="css/style.css">
 
   <title>Tela inicial</title>
 </head>
 
 <body>
-
-  <div th:if="${#objects.nullSafe(logado, false)} == false">
-    <div th:if="${logado} == false" style="text-align: center;">
-      <span class="alert alert-info">Usuario deslogado</span>
-    </div>
-    <a href="/login" class="button-login" title="Login">
-      <i class="bi bi-person-circle"></i>
-    </a>
-  </div>
-
-  <div th:if="${logado} == true">
-    <div style="text-align: center;">
-      <span class="alert alert-success">Login realizado com sucesso</span>
-    </div>
-    <a onclick="confirmacao()" class="button-exit" title="Logout">
-      <i class="bi bi-box-arrow-right"></i>
-    </a>
-  </div>
-
-  <div class="container mt-5">
-    <h1 class="text-left mb-4">Em Alta</h1>
-
-    <div class="text-left">
-      <div class="filme" onclick="selecionarFilme('Filme 1')">
-        <img src="\filmes\AS_MARVELS.webp" alt="Filme 1">
-      </div>
-      <div class="filme" onclick="selecionarFilme('Filme 2')">
-        <img src="\filmes\MUSSUM.webp" alt="Filme 2">
-      </div>
-      <div class="filme" onclick="selecionarFilme('Filme 3')">
-        <img src="\filmes\SOM_DA_LIBERDADE.webp" alt="Filme 3">
-      </div>
-      <div class="filme" onclick="selecionarFilme('Filme 4')">
-        <img src="\filmes\TROLLS_3.webp" alt="Filme 4">
-      </div>
-      <div class="filme" onclick="selecionarFilme('Filme 5')">
-        <img src="\filmes\NAO_ABRA.webp" alt="Filme 5">
-      </div>
-      <div class="filme" onclick="selecionarFilme('Filme 6')">
-        <img src="\filmes\FIVE_NIGHTS_AT_FREDDYS.webp" alt="Filme 6">
-      </div>
-      <div class="filme" onclick="selecionarFilme('Filme 7')">
-        <img src="\filmes\ASSASSINOS_DA_LUA_DAS_FLORES.webp" alt="Filme 7">
-      </div>
-    </div>
-
-  </div>
-
-  <!-- Nova seção com as imagens -->
-  <div class="container mt-5">
-    <h1 class="text-left mb-4">Teatro</h1>
-
-    <div class="row">
-      <!-- Div que ocupa duas linhas e duas colunas -->
-      <div class="col-md-5">
-        <!-- Imagem maior ocupando duas linhas e duas colunas -->
-        <div class="teatro-principal" onclick="selecionarTeatro('Teatro 1')">
-          <img class="principal" src="\teatro\NEUROTICA.jpg" alt="Teatro 1">
-        </div>
-      </div>
-
-      <!-- Divs que ocupam uma linha cada -->
-      <div class="col-md-2">
-        <!-- Demais imagens ocupando uma linha -->
-        <div class="teatro" onclick="selecionarTeatro('Teatro 2')">
-          <img src="\teatro\A_MEGERA_DOMADA.webp" alt="Teatro 2">
-        </div>
-        <div class="teatro" onclick="selecionarTeatro('Teatro 3')">
-          <img src="\teatro\ALADIN.webp" alt="Teatro 3">
-        </div>
-      </div>
-
-      <div class="col-md-2">
-        <!-- Mais imagens ocupando uma linha -->
-        <div class="teatro" onclick="selecionarTeatro('Teatro 4')">
-          <img src="\teatro\BYE_BYE_BANGU.webp" alt="Teatro 4">
-        </div>
-        <div class="teatro" onclick="selecionarTeatro('Teatro 5')">
-          <img src="\teatro\CINDERELA.webp" alt="Teatro 5">
-        </div>
-      </div>
-
-      <div class="col-md-2">
-        <!-- Mais imagens ocupando uma linha -->
-        <div class="teatro" onclick="selecionarTeatro('Teatro 6')">
-          <img src="\teatro\COMEDY_SAMPA_CLUB.webp" alt="Teatro 6">
-        </div>
-        <div class="teatro" onclick="selecionarTeatro('Teatro 7')">
-          <img src="\teatro\NAO_ME_COBRE_COERENCIA.webp" alt="Teatro 7">
-        </div>
-      </div>
-    </div>
-  </div>
-
+  <span>Logado com sucesso</span>
 </body>
 
 </html>
