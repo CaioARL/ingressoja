@@ -1,9 +1,16 @@
 $(document).ready(function() {
-  $(".alert").slideUp(1200);
+  $(".alert").delay(3000).slideUp(500);
 });
 
-function confirmacao() {
+function logout() {
+
   if(confirm("Você será deslogado!")){
-    window.location.href = '/home?logado=false';
-  };
+    window.location.href = "/logout";
+  }
+  
 }
+
+// Verifica a sessão
+setInterval(function() {
+  window.location.href = "/expire";
+}, 20 * 60000);

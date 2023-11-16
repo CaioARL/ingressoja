@@ -31,11 +31,11 @@
       <input type="password" class="form-control" name="senha">
     </div>
 
-    <div class="alert alert-danger" th:if="${userFind == false}">
+    <div class="alert alert-danger" th:if="${userFind != null && userFind == false}">
       <span>Login não encontrado</span>
     </div>
 
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary">Entrar</button>
   </form>
   
 </body>

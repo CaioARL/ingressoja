@@ -2,8 +2,8 @@ package br.com.bd.ingresso.controller;
 
 import java.util.Objects;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,16 +15,38 @@ import br.com.bd.ingresso.repository.UsuarioRepository;
 
 @Controller
 public class LoginController {
+  private static final String REDIRECT_HOME = "redirect:/home";
+  private HttpSession httpSession;
   private UsuarioRepository loginRepository;
-  private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
-  public LoginController(UsuarioRepository loginRepository) {
+  public LoginController(UsuarioRepository loginRepository, HttpSession httpSession) {
     this.loginRepository = loginRepository;
+    this.httpSession = httpSession;
   }
 
-  @GetMapping(value = "/ingressoja")
-  public ModelAndView index() {
-    return home(null);
+  @GetMapping("/home")
+  public ModelAndView home() {
+    ModelAndView modelAndView = new ModelAndView("/home");
+
+    Object expirado = httpSession.getAttribute("expired");
+    Object user = httpSession.getAttribute("user");
+    Object exit = httpSession.getAttribute("exit");
+
+    if (expirado != null) {
+      modelAndView.addObject("expired", true);
+      httpSession.removeAttribute("expired");
+    } else {
+      modelAndView.addObject("expired", false);
+    }
+
+    modelAndView.addObject("logado", Objects.nonNull(user));
+
+    if (exit != null && exit.equals(true)) {
+      modelAndView.addObject("exit", true);
+      httpSession.removeAttribute("exit");
+    }
+
+    return modelAndView;
   }
 
   @GetMapping("/login")
@@ -34,28 +56,33 @@ public class LoginController {
 
   @PostMapping("/login")
   public ModelAndView login(UserDto user) {
-    try {
-      ModelAndView modelAndView = new ModelAndView();
+    ModelAndView modelAndView = new ModelAndView();
+    Usuario userDto = loginRepository.findByEmailAndSenha(user.getEmail(), user.getSenha());
 
-      Usuario userDto = loginRepository.findByEmailAndSenha(user.getEmail(), user.getSenha());
-      if (Objects.nonNull(userDto)) {
-        return home(true);
-
-      }
+    if (Objects.nonNull(userDto)) {
+      httpSession.setAttribute("user", userDto);
+      modelAndView.setViewName(REDIRECT_HOME);
+    } else {
       modelAndView.addObject("userFind", false);
-      return modelAndView;
-
-    } catch (Exception e) {
-      logger.error("Erro ao logar", e);
+      modelAndView.setViewName("login");
     }
 
-    return null;
+    return modelAndView;
   }
 
-  @GetMapping("/home")
-  public ModelAndView home(Boolean logado) {
-    ModelAndView modelAndView = new ModelAndView("/home");
-    modelAndView.addObject("logado", logado);
-    return modelAndView;
+  @GetMapping("/logout")
+  public String logout() {
+    httpSession.invalidate();
+    httpSession.setAttribute("exit", true);
+    return REDIRECT_HOME;
+  }
+
+  @GetMapping("/expire")
+  public String expire() {
+    if (httpSession.getAttribute("user") != null) {
+      httpSession.removeAttribute("user");
+      httpSession.setAttribute("expired", true);
+    }
+    return REDIRECT_HOME;
   }
 }
