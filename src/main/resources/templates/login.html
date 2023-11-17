@@ -24,6 +24,10 @@
     <img src="/logo/ingressoja.png" alt="Logo">
   </a>
 
+  <div style="text-align: center;" th:if="${userCreate == true}">
+    <span class="alert alert-success">Cadastro realizado com sucesso</span>
+  </div>
+
   <a href="javascript:history.back()" class="back-icon" style="position: absolute; top: 10px; right: 10px;">
     <i class="fas fa-arrow-left"></i>
   </a>

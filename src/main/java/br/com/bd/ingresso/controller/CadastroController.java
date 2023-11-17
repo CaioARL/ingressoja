@@ -2,8 +2,6 @@ package br.com.bd.ingresso.controller;
 
 import java.util.InputMismatchException;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,24 +18,13 @@ import br.com.bd.ingresso.repository.UsuarioRepository;
 @Controller
 @RequestMapping("/ingressoja")
 public class CadastroController {
-    private HttpSession httpSession;
     private CompradotRepository compradorRepository;
     private UsuarioRepository usuarioRepository;
 
-    public CadastroController(HttpSession httpSession, CompradotRepository compradorRepository,
+    public CadastroController(CompradotRepository compradorRepository,
             UsuarioRepository usuarioRepository) {
-        this.httpSession = httpSession;
         this.compradorRepository = compradorRepository;
         this.usuarioRepository = usuarioRepository;
-    }
-
-    @GetMapping("/validateCadastro")
-    public String validateCadastro(@RequestParam String cpf) {
-        if (!validateCPF(cpf)) {
-            return "CPF inválido";
-        }
-
-        return null;
     }
 
     @GetMapping("/cadastro")
@@ -47,37 +34,43 @@ public class CadastroController {
 
     @PostMapping("/cadastro")
     public ModelAndView cadastroPost(CompradorDto compradorDto) {
+
         ModelAndView modelAndView = new ModelAndView();
-        Comprador cpFromBd = compradorRepository.findByCpf(compradorDto.getCpf());
+        if (validateCPF(compradorDto.getCpf())) {
 
-        if (cpFromBd == null) {
-            Comprador cp = new Comprador();
-            cp.setId(compradorRepository.findNextId());
-            cp.setNome(compradorDto.getNome());
-            cp.setCpf(compradorDto.getCpf());
-            cp.setAtivo(1);
+            Comprador cpFromBd = compradorRepository.findByCpf(compradorDto.getCpf());
 
-            Usuario usuario = usuarioRepository.findByEmailAndSenha(compradorDto.getEmail(), compradorDto.getSenha());
+            if (cpFromBd == null) {
+                Comprador cp = new Comprador();
+                cp.setId(compradorRepository.findNextId());
+                cp.setNome(compradorDto.getNome());
+                cp.setCpf(compradorDto.getCpf());
+                cp.setAtivo(1);
 
-            if (usuario == null) {
-                usuario = new Usuario(usuarioRepository.findNextId(), compradorDto.getEmail(),
+                Usuario usuario = usuarioRepository.findByEmailAndSenha(compradorDto.getEmail(),
                         compradorDto.getSenha());
 
+                if (usuario == null) {
+                    usuario = new Usuario(usuarioRepository.findNextId(), compradorDto.getEmail(),
+                            compradorDto.getSenha());
+
+                    usuarioRepository.save(usuario);
+                }
+
+                cp.setUsuario(usuario);
+                compradorRepository.save(cp);
                 usuarioRepository.save(usuario);
+
+                modelAndView.setViewName("/login");
+                modelAndView.addObject("userCreate", true);
+            } else {
+                modelAndView.setViewName("/cadastro");
+                modelAndView.addObject("userExist", true);
             }
-
-            cp.setUsuario(usuario);
-            compradorRepository.save(cp);
-            usuarioRepository.save(usuario);
-
-            modelAndView.setViewName("/home");
-            modelAndView.addObject("userExist", false);
-            httpSession.setAttribute("user", cp.getUsuario());
         } else {
             modelAndView.setViewName("/cadastro");
-            modelAndView.addObject("userExist", true);
+            modelAndView.addObject("cpfInvalid", true);
         }
-
         return modelAndView;
     }
 

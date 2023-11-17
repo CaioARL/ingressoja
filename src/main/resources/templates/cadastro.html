@@ -43,7 +43,11 @@
     <div class="mb-3">
       <label for="cpf" class="form-label">CPF</label>
       <input type="text" class="form-control" name="cpf" id="cpf" required>
-      <small id="cpfHelp" class="form-text" style="color: salmon;">Digite apenas números.</small>
+      <small id="cpfHelp" class="form-text" style="color: salmon;" th:if="${cpfInvalid != true}">Digite apenas números.</small>
+      <div th:if="${cpfInvalid == true}">
+        <br>
+        <span class="alert alert-danger" >Cpf inválido</span>
+      </div>
     </div>
 
     <div class="mb-3">
@@ -65,6 +69,7 @@
 
     <button type="submit" class="btn btn-primary">Cadastrar</button>
   </form>
+
 </body>
 
 </html>
