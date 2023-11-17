@@ -1,4 +1,4 @@
-package br.com.bd.ingresso.model;
+package br.com.bd.ingresso.model.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

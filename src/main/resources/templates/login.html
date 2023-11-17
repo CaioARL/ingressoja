@@ -9,17 +9,17 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="/css/style.css">
 
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-  <script src="/home.js"></script>
+  <script src="/main.js"></script>
 
   <title>Login de Usuário</title>
 </head>
 
 <body>
   <h1>Login</h1>
-  <form method="post" action="/login">
+  <form method="post" action="/ingressoja/login">
     <div class="mb-3">
       <label for="exampleInputEmail1" class="form-label">Email address</label>
       <input type="email" class="form-control" name="email" aria-describedby="emailHelp">
@@ -36,6 +36,7 @@
     </div>
 
     <button type="submit" class="btn btn-primary">Entrar</button>
+    <a href="/ingressoja/cadastro" class="btn btn-secondary">Cadastrar</a>
   </form>
   
 </body>
