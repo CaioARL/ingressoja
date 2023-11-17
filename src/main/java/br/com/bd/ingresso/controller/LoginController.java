@@ -40,10 +40,14 @@ public class LoginController {
       httpSession.setAttribute("user", userDto);
       modelAndView.setViewName(REDIRECT_HOME);
     } else {
-      modelAndView.addObject("userFind", false);
+      userDto = loginRepository.findByEmail(user.getEmail());
       modelAndView.setViewName("login");
+      if (Objects.nonNull(userDto)) {
+        modelAndView.addObject("wrongPassword", true);
+      } else {
+        modelAndView.addObject("userFind", false);
+      }
     }
-
     return modelAndView;
   }
 

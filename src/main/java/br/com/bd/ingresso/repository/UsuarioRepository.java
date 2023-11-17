@@ -10,6 +10,8 @@ import org.springframework.data.jpa.repository.Query;
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     Usuario findByEmailAndSenha(String email, String senha);
 
+    Usuario findByEmail(String email);
+
     // Pega próximo id
     @Query(value = "SELECT MAX(id) FROM Usuario")
     Long findMaxId();

@@ -8,6 +8,19 @@ h1{
   color: white;
 }
 
+.logo {
+  position: absolute;
+  top: 5%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100px;
+  height: auto;
+}
+
+.logo img{
+  width: 50px;
+}
+
 .bi{
   font-size: xx-large;
 }
