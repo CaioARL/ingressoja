@@ -64,3 +64,23 @@ window.onload = function() {
     }
   });
 }
+
+document.addEventListener("DOMContentLoaded", function() {
+  function togglePasswordVisibility(inputId, toggleId) {
+    document.getElementById(toggleId).addEventListener("click", function(e) {
+      const passwordInput = document.getElementById(inputId);
+      if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+        e.target.classList.add("fa-eye-slash");
+        e.target.classList.remove("fa-eye");
+      } else {
+        passwordInput.type = "password";
+        e.target.classList.add("fa-eye");
+        e.target.classList.remove("fa-eye-slash");
+      }
+    });
+  }
+
+  togglePasswordVisibility("senha", "togglePassword");
+  togglePasswordVisibility("confirmarSenha", "toggleConfirmPassword");
+});

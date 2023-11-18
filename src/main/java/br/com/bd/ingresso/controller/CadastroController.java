@@ -11,16 +11,16 @@ import org.springframework.web.servlet.ModelAndView;
 import br.com.bd.ingresso.model.Comprador;
 import br.com.bd.ingresso.model.Usuario;
 import br.com.bd.ingresso.model.dto.CompradorDto;
-import br.com.bd.ingresso.repository.CompradotRepository;
+import br.com.bd.ingresso.repository.CompradorRepository;
 import br.com.bd.ingresso.repository.UsuarioRepository;
 
 @Controller
 @RequestMapping("/ingressoja")
 public class CadastroController {
-    private CompradotRepository compradorRepository;
+    private CompradorRepository compradorRepository;
     private UsuarioRepository usuarioRepository;
 
-    public CadastroController(CompradotRepository compradorRepository,
+    public CadastroController(CompradorRepository compradorRepository,
             UsuarioRepository usuarioRepository) {
         this.compradorRepository = compradorRepository;
         this.usuarioRepository = usuarioRepository;

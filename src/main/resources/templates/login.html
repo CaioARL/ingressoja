@@ -28,6 +28,10 @@
     <span class="alert alert-success">Cadastro realizado com sucesso</span>
   </div>
 
+  <div style="text-align: center;" th:if="${updated == true}">
+    <span class="alert alert-success">Atualização cadastral realizada com sucesso, faça o login novamente</span>
+  </div>
+
   <a href="javascript:history.back()" class="back-icon" style="position: absolute; top: 10px; right: 10px;">
     <i class="fas fa-arrow-left"></i>
   </a>
