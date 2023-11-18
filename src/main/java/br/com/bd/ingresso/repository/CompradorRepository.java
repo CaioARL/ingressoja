@@ -3,7 +3,6 @@ package br.com.bd.ingresso.repository;
 import br.com.bd.ingresso.model.Comprador;
 import br.com.bd.ingresso.model.Usuario;
 import br.com.bd.ingresso.model.dto.CompradorDto;
-import br.com.bd.ingresso.model.dto.PerfilDto;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.data.jpa.repository.JpaRepository;

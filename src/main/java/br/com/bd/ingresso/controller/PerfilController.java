@@ -11,13 +11,14 @@ import org.springframework.web.servlet.ModelAndView;
 import br.com.bd.ingresso.model.Comprador;
 import br.com.bd.ingresso.model.Usuario;
 import br.com.bd.ingresso.model.dto.CompradorDto;
-import br.com.bd.ingresso.model.dto.PerfilDto;
 import br.com.bd.ingresso.repository.CompradorRepository;
 import br.com.bd.ingresso.repository.UsuarioRepository;
 
 @Controller
 @RequestMapping("/ingressoja")
 public class PerfilController {
+    private static final String PERFIL_VIEW = "perfil";
+    private static final String UPDATED = "updated";
     private HttpSession httpSession;
     private CompradorRepository compradorRepository;
     private UsuarioRepository usuarioRepository;
@@ -32,18 +33,18 @@ public class PerfilController {
     @GetMapping("/editarPerfil")
     public ModelAndView editarPerfil() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("perfil");
+        modelAndView.setViewName(PERFIL_VIEW);
         Usuario user = (Usuario) httpSession.getAttribute("user");
         CompradorDto perfil = compradorRepository.findByEmailAndSenha(user.getEmail(), user.getSenha());
 
-        modelAndView.addObject("perfil", perfil);
+        modelAndView.addObject(PERFIL_VIEW, perfil);
         return modelAndView;
     }
 
     @PostMapping("/editarPerfil")
     public ModelAndView editarPerfil(CompradorDto perfil) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("perfil");
+        modelAndView.setViewName(PERFIL_VIEW);
 
         Usuario user = (Usuario) httpSession.getAttribute("user");
         CompradorDto perfilFromDb = compradorRepository.findByEmailAndSenha(user.getEmail(), user.getSenha());
@@ -58,7 +59,7 @@ public class PerfilController {
 
             compradorRepository.save(comprador);
 
-            modelAndView.addObject("updated", true);
+            modelAndView.addObject(UPDATED, true);
         } else if (!perfilFromDb.getEmail().equals(perfil.getEmail())
                 || !perfilFromDb.getSenha().equals(perfil.getSenha())) {
 
@@ -73,14 +74,14 @@ public class PerfilController {
 
             httpSession.invalidate();
             modelAndView.setViewName("login");
-            modelAndView.addObject("updated", true);
+            modelAndView.addObject(UPDATED, true);
             user = usuario;
         } else {
-            modelAndView.addObject("updated", false);
+            modelAndView.addObject(UPDATED, false);
         }
 
         perfil = compradorRepository.findByEmailAndSenha(user.getEmail(), user.getSenha());
-        modelAndView.addObject("perfil", perfil);
+        modelAndView.addObject(PERFIL_VIEW, perfil);
         return modelAndView;
     }
 
