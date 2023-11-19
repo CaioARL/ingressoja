@@ -34,6 +34,8 @@ public class CadastroController {
     @PostMapping("/cadastro")
     public ModelAndView cadastroPost(CompradorDto compradorDto) {
 
+        compradorDto.setCpf(compradorDto.getCpf().replaceAll("[^0-9]", ""));
+
         ModelAndView modelAndView = new ModelAndView();
         if (validateCPF(compradorDto.getCpf())) {
 
@@ -68,6 +70,8 @@ public class CadastroController {
             }
         } else {
             modelAndView.setViewName("/cadastro");
+            compradorDto.setCpf(compradorDto.getCpf().replaceAll("(\\d{3})(\\d{3})(\\d{3})(\\d{2})", "$1.$2.$3-$4"));
+            modelAndView.addObject("usuario", compradorDto);
             modelAndView.addObject("cpfInvalid", true);
         }
         return modelAndView;

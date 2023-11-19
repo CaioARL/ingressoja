@@ -35,30 +35,33 @@
       <span>Usuário com o mesmo CPF ja cadastrado</span>
     </div>
 
+    <div class="alert alert-danger" th:if="${cpfInvalid == true}">
+      <span>Cpf inválido</span>
+    </div>
+
     <div class="mb-3">
       <label for="nome" class="form-label">Nome</label>
-      <input type="text" class="form-control" name="nome" required>
+      <input type="text" class="form-control" th:value="${usuario != null ? usuario.nome : ''}" name="nome" required>
     </div>
 
     <div class="mb-3">
       <label for="cpf" class="form-label">CPF</label>
-      <input type="text" class="form-control" name="cpf" id="cpf" required>
-      <small id="cpfHelp" class="form-text" style="color: salmon;" th:if="${cpfInvalid != true}">Digite apenas números.</small>
-      <div th:if="${cpfInvalid == true}">
-        <br>
-        <span class="alert alert-danger" >Cpf inválido</span>
-      </div>
+      <input type="text" oninput="mascara(this)" class="form-control" th:value="${usuario != null ? usuario.cpf : ''}"
+        name="cpf" id="cpf" required>
+      <small id="cpfHelp" class="form-text" style="color: salmon;" th:if="${cpfInvalid != true}">Digite apenas
+        números.</small>
     </div>
 
     <div class="mb-3">
       <label for="email" class="form-label">Email</label>
-      <input type="email" class="form-control" name="email" required>
+      <input type="email" class="form-control" th:value="${usuario != null ? usuario.email : ''}" name="email" required>
     </div>
 
     <div class="mb-3">
       <label for="senha" class="form-label">Senha</label>
       <div class="input-group">
-        <input id="senha" type="password" class="form-control border-right-0" name="senha" minlength="8" maxlength="20" required>
+        <input id="senha" type="password" oninput="validatePassword()" class="form-control border-right-0" name="senha"
+          minlength="8" maxlength="20" required>
         <div class="input-group-append">
           <span class="form-control border-right-0">
             <i id="togglePassword" class="fa fa-eye"></i>
@@ -68,9 +71,10 @@
     </div>
 
     <div class="mb-3">
-      <label for="senha" class="form-label">Confirmar Senha</label>
+      <label for="confirmarSenha" class="form-label">Confirmar Senha</label>
       <div class="input-group">
-        <input id="confirmarSenha" type="password" class="form-control border-right-0" name="senha" minlength="8" maxlength="20" required>
+        <input id="confirmarSenha" type="password" oninput="validatePassword()" class="form-control border-right-0"
+          minlength="8" maxlength="20" required>
         <div class="input-group-append">
           <span class="form-control border-right-0">
             <i id="toggleConfirmPassword" class="fa fa-eye"></i>
@@ -81,10 +85,10 @@
     </div>
 
     <div class="input-containercheckbox">
-      <input type="checkbox" id="termos" name="termos" required>
+      <input type="checkbox" id="termos" name="termos" checked="${usuario != null}" required>
       <label for="termos">Li e aceito os termos de uso e políticas de privacidade</label>
 
-      <input type="checkbox" id="declaracao" name="declaracao" required>
+      <input type="checkbox" id="declaracao" name="declaracao" checked="${usuario != null}" required>
       <label for="declaracao">Declaro que todas as informações preenchidas são verdadeiras</label>
     </div>
 
