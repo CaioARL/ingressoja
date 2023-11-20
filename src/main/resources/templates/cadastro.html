@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="/main.js"></script>
+
+  <title>Cadastro de Usuário</title>
+</head>
+
+<body>
+  <a class="logo" href="/ingressoja/home" title="Tela Inicial">
+    <img src="/logo/ingressoja.png" alt="Logo">
+  </a>
+
+  <a href="javascript:history.back()" class="back-icon" style="position: absolute; top: 10px; right: 10px;">
+    <i class="fas fa-arrow-left"></i>
+  </a>
+
+  <h1>Cadastro</h1>
+  <form method="post" action="/ingressoja/cadastro">
+
+    <div class="alert alert-danger" th:if="${userExist == true}">
+      <span>Usuário com o mesmo CPF ja cadastrado</span>
+    </div>
+
+    <div class="alert alert-danger" th:if="${cpfInvalid == true}">
+      <span>Cpf inválido</span>
+    </div>
+
+    <div class="mb-3">
+      <label for="nome" class="form-label">Nome</label>
+      <input type="text" class="form-control" th:value="${usuario != null ? usuario.nome : ''}" name="nome" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="cpf" class="form-label">CPF</label>
+      <input type="text" oninput="mascara(this)" class="form-control" th:value="${usuario != null ? usuario.cpf : ''}"
+        name="cpf" id="cpf" required>
+      <small id="cpfHelp" class="form-text" style="color: salmon;" th:if="${cpfInvalid != true}">Digite apenas
+        números.</small>
+    </div>
+
+    <div class="mb-3">
+      <label for="email" class="form-label">Email</label>
+      <input type="email" class="form-control" th:value="${usuario != null ? usuario.email : ''}" name="email" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="senha" class="form-label">Senha</label>
+      <div class="input-group">
+        <input id="senha" type="password" oninput="validatePassword()" class="form-control border-right-0" name="senha"
+          minlength="8" maxlength="20" required>
+        <div class="input-group-append">
+          <span class="form-control border-right-0">
+            <i id="togglePassword" class="fa fa-eye"></i>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="confirmarSenha" class="form-label">Confirmar Senha</label>
+      <div class="input-group">
+        <input id="confirmarSenha" type="password" oninput="validatePassword()" class="form-control border-right-0"
+          minlength="8" maxlength="20" required>
+        <div class="input-group-append">
+          <span class="form-control border-right-0">
+            <i id="toggleConfirmPassword" class="fa fa-eye"></i>
+          </span>
+        </div>
+      </div>
+      <span id="mensagemErro" style="color: salmon;"></span>
+    </div>
+
+    <div class="input-containercheckbox">
+      <input type="checkbox" id="termos" name="termos" checked="${usuario != null}" required>
+      <label for="termos">Li e aceito os termos de uso e políticas de privacidade</label>
+
+      <input type="checkbox" id="declaracao" name="declaracao" checked="${usuario != null}" required>
+      <label for="declaracao">Declaro que todas as informações preenchidas são verdadeiras</label>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Cadastrar</button>
+  </form>
+
+</body>
+
+</html>

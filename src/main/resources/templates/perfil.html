@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="/main.js"></script>
+
+  <!-- Inclua o jQuery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <!-- Inclua o Bootstrap -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <title>Cadastro de Usuário</title>
+</head>
+
+<body>
+  <a href="javascript:history.back()" class="back-icon" style="position: absolute; top: 10px; right: 10px;">
+    <i class="fas fa-arrow-left"></i>
+  </a>
+
+  <a class="logo" href="/ingressoja/home" title="Tela Inicial">
+    <img src="/logo/ingressoja.png" alt="Logo">
+  </a>
+
+  <div style="text-align: center;" th:if="${updated == true}">
+    <span class="alert alert-success">Atualização cadastral realizada com sucesso</span>
+  </div>
+
+  <div style="text-align: center;" th:if="${updated == false}">
+    <span class="alert alert-warning">Nenhum dado foi modificado</span>
+  </div>
+
+  <h1>Editar Perfil</h1>
+  <form method="post" action="/ingressoja/editarPerfil">
+
+    <div class="mb-3">
+      <label for="nome" class="form-label">Nome</label>
+      <input type="text" class="form-control" id="nome" name="nome" th:value="${perfil.nome}" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="cpfPerfil" class="form-label">CPF<small class="form-text" style="color: salmon;"> *não
+          editável*</small></label>
+      <input type="text" class="readonly form-control" id="cpfPerfil" name="cpf" th:value="${perfil.cpf}" required
+        readonly>
+    </div>
+
+    <div class="mb-3">
+      <label for="email" class="form-label">Email</label>
+      <input type="text" class="form-control" id="email" name="email" th:value="${perfil.email}" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="senha" class="form-label">Senha</label>
+      <div class="input-group">
+        <input id="senha" type="password" class="form-control border-right-0" th:value="${perfil.senha}" name="senha"
+          minlength="8" maxlength="20" required>
+        <div class="input-group-append">
+          <span class="form-control border-right-0">
+            <i id="togglePassword" class="fa fa-eye"></i>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Salvar alterações</button>
+  </form>
+
+  <br>
+  <br>
+  <br>
+  <br>
+
+  <div class="mb-3">
+    <button type="button" class="btn btn-danger" id="deleteAccount">Excluir Conta</button>
+  </div>
+
+  <!-- Modal Excluir Conta-->
+  <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmação de Exclusão</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" style="color: black;">
+          Tem certeza de que deseja excluir sua conta? <br>
+          Esta ação não pode ser desfeita.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" data-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-danger" onclick="deleteAccount()" id="deleteButton">Excluir</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

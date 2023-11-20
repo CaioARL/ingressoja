@@ -9,32 +9,47 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="/css/style.css">
 
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-  <script src="/home.js"></script>
+  <script src="/main.js"></script>
 
-  <title>Tela inicial</title>
+  <title>Ingresso Já</title>
 </head>
 
 <body>
+  <a class="logo" href="/ingressoja/home" title="Tela Inicial">
+    <img src="/logo/ingressoja.png" alt="Logo">
+  </a>
 
-  <div th:if="${#objects.nullSafe(logado, false)} == false">
-    <div th:if="${logado} == false" style="text-align: center;">
-      <span class="alert alert-info">Usuario deslogado</span>
+  <div th:if="${expired == true}">
+    <div style="text-align: center;">
+      <span class="alert alert-danger">Sessão expirada</span>
     </div>
-    <a href="/login" class="button-login" title="Login">
+  </div>
+
+  <div th:if="${logado == false}">
+    <div th:if="${exit == true}" style="text-align: center;">
+      <span class="alert alert-warning">Usuario deslogado</span>
+    </div>
+    <a href="/ingressoja/login" class="button-login" title="Login">
       <i class="bi bi-person-circle"></i>
     </a>
   </div>
 
-  <div th:if="${logado} == true">
+  <div th:if="${logado == true && expired == false}">
     <div style="text-align: center;">
       <span class="alert alert-success">Login realizado com sucesso</span>
     </div>
-    <a onclick="confirmacao()" class="button-exit" title="Logout">
-      <i class="bi bi-box-arrow-right"></i>
-    </a>
+    <button class="menu-bar btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+      Menu
+    </button>
+    <ul class="dropdown-menu dropdown-menu-dark">
+      <li><a class="dropdown-item active bi-person-circle" href="/ingressoja/editarPerfil"> Editar perfil</a></li>
+      <li><hr class="dropdown-divider"></li>
+      <li><a id="logoutAccount" class="dropdown-item bi-box-arrow-right"> Logout</a></li>
+    </ul>
   </div>
 
   <div class="container mt-5">
@@ -107,6 +122,28 @@
         </div>
         <div class="teatro" onclick="selecionarTeatro('Teatro 7')">
           <img src="\teatro\NAO_ME_COBRE_COERENCIA.webp" alt="Teatro 7">
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- Modal Logout -->
+    <div class="modal fade" id="confirmLogoutModal" tabindex="-1" aria-labelledby="confirmLogoutModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="confirmLogoutModalLabel">Confirmação de Saída</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" style="color: black;">
+          Tem certeza de que deseja sair sua conta? <br>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" data-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-danger" onclick="logout()" id="deleteButton">Sair</button>
         </div>
       </div>
     </div>

@@ -1,3 +1,7 @@
+CREATE DATABASE IF NOT EXISTS `ingressoja` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+USE `ingressoja`;
+
 CREATE TABLE Usuario (
     id INT PRIMARY KEY,
     email VARCHAR(255),
