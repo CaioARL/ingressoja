@@ -1,4 +1,4 @@
-package br.com.bd.ingresso.controller;
+package br.com.bd.ingressoja.controller;
 
 import java.util.Objects;
 
@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import br.com.bd.ingresso.model.Usuario;
-import br.com.bd.ingresso.model.dto.UserDto;
-import br.com.bd.ingresso.repository.UsuarioRepository;
+import br.com.bd.ingressoja.model.Usuario;
+import br.com.bd.ingressoja.model.dto.UserDto;
+import br.com.bd.ingressoja.repository.UsuarioRepository;
 
 @Controller
 @RequestMapping("/ingressoja")

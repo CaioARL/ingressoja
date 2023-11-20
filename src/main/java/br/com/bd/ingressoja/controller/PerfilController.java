@@ -1,4 +1,4 @@
-package br.com.bd.ingresso.controller;
+package br.com.bd.ingressoja.controller;
 
 import javax.servlet.http.HttpSession;
 
@@ -8,11 +8,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import br.com.bd.ingresso.model.Comprador;
-import br.com.bd.ingresso.model.Usuario;
-import br.com.bd.ingresso.model.dto.CompradorDto;
-import br.com.bd.ingresso.repository.CompradorRepository;
-import br.com.bd.ingresso.repository.UsuarioRepository;
+import br.com.bd.ingressoja.model.Comprador;
+import br.com.bd.ingressoja.model.Usuario;
+import br.com.bd.ingressoja.model.dto.CompradorDto;
+import br.com.bd.ingressoja.repository.CompradorRepository;
+import br.com.bd.ingressoja.repository.UsuarioRepository;
 
 @Controller
 @RequestMapping("/ingressoja")

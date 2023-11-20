@@ -1,4 +1,4 @@
-package br.com.bd.ingresso.controller;
+package br.com.bd.ingressoja.controller;
 
 import java.util.Objects;
 

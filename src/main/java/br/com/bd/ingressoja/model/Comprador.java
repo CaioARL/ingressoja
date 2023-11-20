@@ -1,4 +1,4 @@
-package br.com.bd.ingresso.model;
+package br.com.bd.ingressoja.model;
 
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;

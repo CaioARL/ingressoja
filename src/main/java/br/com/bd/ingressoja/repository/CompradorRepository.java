@@ -1,10 +1,11 @@
-package br.com.bd.ingresso.repository;
-
-import br.com.bd.ingresso.model.Comprador;
-import br.com.bd.ingresso.model.Usuario;
-import br.com.bd.ingresso.model.dto.CompradorDto;
+package br.com.bd.ingressoja.repository;
 
 import org.springframework.stereotype.Repository;
+
+import br.com.bd.ingressoja.model.Comprador;
+import br.com.bd.ingressoja.model.Usuario;
+import br.com.bd.ingressoja.model.dto.CompradorDto;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -28,7 +29,7 @@ public interface CompradorRepository extends JpaRepository<Comprador, Long> {
         }
     }
 
-    @Query("select new br.com.bd.ingresso.model.dto.CompradorDto(cp.nome, cp.cpf, usu.email, usu.senha) from Comprador cp "
+    @Query("select new br.com.bd.ingressoja.model.dto.CompradorDto(cp.nome, cp.cpf, usu.email, usu.senha) from Comprador cp "
             + "join cp.usuario usu "
             + "where usu.email = :email and usu.senha = :senha")
     CompradorDto findByEmailAndSenha(@Param("email") String email, @Param("senha") String senha);

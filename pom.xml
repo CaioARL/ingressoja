@@ -8,9 +8,9 @@
 		<version>2.7.17</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>br.com.dani</groupId>
+	<groupId>br.com.bd.ingressoja</groupId>
 	<artifactId>layout</artifactId>
-	<version>feature-user-session-SNAPSHOT</version>
+	<version>develop-SNAPSHOT</version>
 	<name>layout</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>

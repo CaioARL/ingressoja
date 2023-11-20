@@ -1,8 +1,9 @@
-package br.com.bd.ingresso.repository;
-
-import br.com.bd.ingresso.model.Usuario;
+package br.com.bd.ingressoja.repository;
 
 import org.springframework.stereotype.Repository;
+
+import br.com.bd.ingressoja.model.Usuario;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
