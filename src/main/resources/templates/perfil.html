@@ -64,13 +64,51 @@
 
     <div class="mb-3">
       <label for="senha" class="form-label">Senha</label>
-      <input type="text" class="form-control" id="senha" name="senha" th:value="${perfil.senha}" required>
+      <div class="input-group">
+        <input id="senha" type="password" class="form-control border-right-0" th:value="${perfil.senha}" name="senha"
+          minlength="8" maxlength="20" required>
+        <div class="input-group-append">
+          <span class="form-control border-right-0">
+            <i id="togglePassword" class="fa fa-eye"></i>
+          </span>
+        </div>
+      </div>
     </div>
 
     <button type="submit" class="btn btn-primary">Salvar alterações</button>
   </form>
 
-  <!-- ... -->
+  <br>
+  <br>
+  <br>
+  <br>
+
+  <div class="mb-3">
+    <button type="button" class="btn btn-danger" id="deleteAccount">Excluir Conta</button>
+  </div>
+
+  <!-- Modal Excluir Conta-->
+  <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmação de Exclusão</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" style="color: black;">
+          Tem certeza de que deseja excluir sua conta? <br>
+          Esta ação não pode ser desfeita.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" data-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-danger" onclick="deleteAccount()" id="deleteButton">Excluir</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 
 </html>
