@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>br.com.bd.ingressoja</groupId>
 	<artifactId>layout</artifactId>
-	<version>develop-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>layout</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
