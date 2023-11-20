@@ -10,6 +10,13 @@ h1 {
   color: white;
 }
 
+.alert {
+  font-size: 0.8em;
+  width: 500px;
+  margin: auto;
+  display: block;
+}
+
 .readonly {
   background-color: #e9ecef;
   cursor: not-allowed;

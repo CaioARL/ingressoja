@@ -49,13 +49,14 @@ public class PerfilController {
         Usuario user = (Usuario) httpSession.getAttribute("user");
         CompradorDto perfilFromDb = compradorRepository.findByEmailAndSenha(user.getEmail(), user.getSenha());
 
-        if (!perfilFromDb.getNome().equals(perfil.getNome())
-                || !perfilFromDb.getCpf().equals(perfil.getCpf())) {
+        if (!perfilFromDb.getNome().equals(perfil.getNome())) {
             Comprador comprador = new Comprador();
 
             comprador.setId(compradorRepository.findByCpf(perfilFromDb.getCpf()).getId());
             comprador.setNome(perfil.getNome());
             comprador.setCpf(perfil.getCpf());
+            comprador.setAtivo(1);
+            comprador.setUsuario(usuarioRepository.findByEmailAndSenha(user.getEmail(), user.getSenha()));
 
             compradorRepository.save(comprador);
 
@@ -82,6 +83,20 @@ public class PerfilController {
 
         perfil = compradorRepository.findByEmailAndSenha(user.getEmail(), user.getSenha());
         modelAndView.addObject(PERFIL_VIEW, perfil);
+        return modelAndView;
+    }
+
+    @GetMapping("/excluirConta")
+    public ModelAndView excluirConta(String cpf){
+        ModelAndView modelAndView = new ModelAndView();
+
+        Comprador comprador = compradorRepository.findByCpf(cpf);
+        compradorRepository.delete(comprador);
+        usuarioRepository.delete(comprador.getUsuario());
+
+        httpSession.invalidate();
+        modelAndView.setViewName("login");
+        modelAndView.addObject("accountExcluded", true);
         return modelAndView;
     }
 
