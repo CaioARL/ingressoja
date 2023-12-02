@@ -5,7 +5,7 @@ $(document).ready(function () {
 
 // Show modal sair da conta
 document.addEventListener("DOMContentLoaded", function () {
-  var logoutButton = document.getElementById('logoutAccount');
+  let logoutButton = document.getElementById('logoutAccount');
   if (logoutButton) {
     logoutButton.addEventListener('click', function () {
       $('#confirmLogoutModal').modal('show');
@@ -60,7 +60,7 @@ function validatePassword() {
 
 // Verifica pattern CPF
 function mascara(i) {
-  var v = i.value;
+  let v = i.value;
   v = v.replace(/\D/g, ''); // Remove tudo o que não é dígito
   v = v.replace(/(\d{3})(\d)/, '$1.$2'); // Coloca um ponto entre o terceiro e o quarto dígitos
   v = v.replace(/(\d{3})(\d)/, '$1.$2'); // Coloca um ponto entre o terceiro e o quarto dígitos
@@ -91,15 +91,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // Máscara para o CPF
 window.onload = function () {
-  var cpfField = document.getElementById('cpfPerfil');
+  let cpfField = document.getElementById('cpfPerfil');
   window.vg_cpf = cpfField.value;
-  var maskedCpf = vg_cpf.substr(0, 3) + '.***.***-**';
+  let maskedCpf = vg_cpf.substr(0, 3) + '.***.***-**';
   cpfField.value = maskedCpf;
 }
 
 // Show modal deletar conta
 document.addEventListener("DOMContentLoaded", function () {
-  var deleteButton = document.getElementById('deleteAccount');
+  let deleteButton = document.getElementById('deleteAccount');
   if (deleteButton) {
     deleteButton.addEventListener('click', function () {
       $('#confirmDeleteModal').modal('show');
@@ -109,4 +109,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function deleteAccount() {
   window.location.href = "/ingressoja/excluirConta?cpf=" + vg_cpf;
+}
+
+function selecionarEvento(titleEvento) {
+  window.location.href = "/ingressoja/evento?title=" + titleEvento;
 }

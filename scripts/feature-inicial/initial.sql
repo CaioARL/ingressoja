@@ -1,19 +1,15 @@
 CREATE DATABASE IF NOT EXISTS `ingressoja` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-
 USE `ingressoja`;
-
 CREATE TABLE Usuario (
     id INT PRIMARY KEY,
     email VARCHAR(255),
     senha VARCHAR(255)
 );
-
 CREATE TABLE CategoriaEvento (
     id INT PRIMARY KEY,
     ativo_ BOOLEAN,
     nome VARCHAR(255)
 );
-
 CREATE TABLE Administrador (
     id INT PRIMARY KEY,
     ativo_ BOOLEAN,
@@ -21,7 +17,6 @@ CREATE TABLE Administrador (
     fk_Usuario_id INT,
     FOREIGN KEY (fk_Usuario_id) REFERENCES Usuario(id) ON DELETE CASCADE
 );
-
 CREATE TABLE Produtora (
     id INT PRIMARY KEY,
     ativo_ BOOLEAN,
@@ -32,7 +27,6 @@ CREATE TABLE Produtora (
     fk_Usuario_id INT,
     FOREIGN KEY (fk_Usuario_id) REFERENCES Usuario(id) ON DELETE CASCADE
 );
-
 CREATE TABLE Evento (
     id INT PRIMARY KEY,
     ativo_ BOOLEAN,
@@ -61,7 +55,6 @@ CREATE TABLE Evento (
     FOREIGN KEY (fk_CategoriaEvento_id) REFERENCES CategoriaEvento(id) ON DELETE CASCADE,
     FOREIGN KEY (fk_Produtora_id) REFERENCES Produtora(id) ON DELETE CASCADE
 );
-
 CREATE TABLE Comprador (
     id INT PRIMARY KEY,
     nome VARCHAR(255),
@@ -70,7 +63,6 @@ CREATE TABLE Comprador (
     fk_Usuario_id INT,
     FOREIGN KEY (fk_Usuario_id) REFERENCES Usuario(id) ON DELETE CASCADE
 );
-
 CREATE TABLE Despesa (
     id INT PRIMARY KEY,
     descricao VARCHAR(255),
@@ -78,7 +70,6 @@ CREATE TABLE Despesa (
     fk_Evento_id INT,
     FOREIGN KEY (fk_Evento_id) REFERENCES Evento(id) ON DELETE CASCADE
 );
-
 CREATE TABLE Pedido (
     id INT PRIMARY KEY,
     dataHora DATETIME,
@@ -89,7 +80,6 @@ CREATE TABLE Pedido (
     fk_Comprador_id INT,
     FOREIGN KEY (fk_Comprador_id) REFERENCES Comprador(id) ON DELETE CASCADE
 );
-
 CREATE TABLE TipoDeIngresso (
     id INT PRIMARY KEY,
     ativo_ BOOLEAN,
@@ -103,7 +93,6 @@ CREATE TABLE TipoDeIngresso (
     fk_Evento_id INT,
     FOREIGN KEY (fk_Evento_id) REFERENCES Evento(id) ON DELETE RESTRICT
 );
-
 CREATE TABLE ItemPedido (
     id INT PRIMARY KEY,
     cpf_ VARCHAR(14),
