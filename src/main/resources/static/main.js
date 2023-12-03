@@ -3,17 +3,6 @@ $(document).ready(function () {
   $(".alert").delay(3000).slideUp(500);
 });
 
-// Esconde campos para não administradores
-function hideFields(isAdm) {
-  console.log("Aqui");
-  console.log(isAdm);
-  let catalogo = document.getElementById('catalogo');
-
-  if (!isAdm) {
-    catalogo.hidden = true;
-  }
-}
-
 // Show modal sair da conta
 document.addEventListener("DOMContentLoaded", function () {
   let logoutButton = document.getElementById('logoutAccount');
