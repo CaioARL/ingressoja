@@ -16,15 +16,31 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="/main.js"></script>
 
-    <title>Cadastro de Usuário</title>
+    <title th:text="${title}"/>
 </head>
 
 <body>
+  <div>
+    <a class="logo" href="/ingressoja/home" title="Tela Inicial">
+      <img src="/logo/ingressoja.png" alt="Logo">
+    </a>
+  
+    <a href="javascript:history.back()" class="back-icon" style="position: absolute; top: 10px; right: 10px;">
+      <i class="fas fa-arrow-left"></i>
+    </a>
+  </div>
+
+  </br>
+  </br>
+  </br>
+
     <div class="evento-container">
         <img class="imagem-evento" th:src="${img}" alt="Evento"/>
         <div class="conteudo-evento">
           <h1 class="titulo-evento"><span th:text="${title}"></span></h1>
-          <span class="duracao-evento" th:text="${duracao} + min"></span>
+          <div th:if="${duracao != null}">
+            <span class="duracao-evento" th:text="${duracao} + min"></span>
+          </div>
           <div class="descricao-evento" th:if="${hasDescricao == true}">        
             <span th:text="${descricao}"></span>
           </div>

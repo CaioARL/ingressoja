@@ -192,17 +192,18 @@ h1 {
   align-items: flex-start;
   gap: 20px;
   border: 1px solid #000; /* Adiciona uma borda */
-  padding: 20px; /* Adiciona algum espaço interno */
+  padding: 10px; /* Adiciona algum espaço interno */
   background-color: #5e5b5b; /* Adiciona um fundo cinza claro */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Adiciona uma sombra para criar o efeito de um retângulo mais escuro em volta */
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); /* Adiciona uma sombra para criar o efeito de um retângulo mais escuro em volta */
 }
 
 /* Estiliza a imagem de um evento */
 .imagem-evento {
   position: relative;
-  width: 10%;
+  width: 15%;
   height: auto;
-  bottom: -40px;
+  bottom: -30px;
+  margin-left: 10px;
   border-radius: 3%;
 }
 
@@ -216,7 +217,7 @@ h1 {
 /* Estiliza o titulo */
 .titulo-evento {
   font-size: 2em;
-  color: #ffffff;
+  color: #111111;
 }
 
 /* Estiliza a descrição de um evento */

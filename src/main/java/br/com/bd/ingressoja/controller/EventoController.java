@@ -42,6 +42,9 @@ public class EventoController {
     }
 
     private Long getHorario(Evento evento) {
+        if(evento.getInicio() == null || evento.getTermino() == null){
+            return null;
+        }
         return Duration.between(evento.getInicio(), evento.getTermino()).toMinutes();
     }
 
