@@ -231,3 +231,15 @@ h1 {
   font-size: 1em;
   color: #ffffff;
 }
+
+/* Estiliza o modal */
+.modal-header{
+  background-color: #202020;
+}
+.modal-body{
+  background-color: #2f2f2f;
+  color: white;
+}
+.modal-footer{
+  background-color: #202020;
+}

@@ -3,6 +3,17 @@ $(document).ready(function () {
   $(".alert").delay(3000).slideUp(500);
 });
 
+// Esconde campos para não administradores
+function hideFields(isAdm) {
+  console.log("Aqui");
+  console.log(isAdm);
+  let catalogo = document.getElementById('catalogo');
+
+  if (!isAdm) {
+    catalogo.hidden = true;
+  }
+}
+
 // Show modal sair da conta
 document.addEventListener("DOMContentLoaded", function () {
   let logoutButton = document.getElementById('logoutAccount');
@@ -107,10 +118,12 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
+// Deletar conta
 function deleteAccount() {
   window.location.href = "/ingressoja/excluirConta";
 }
 
+// Entra tela evento
 function selecionarEvento(titleEvento) {
   window.location.href = "/ingressoja/evento?title=" + titleEvento;
 }

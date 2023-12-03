@@ -61,7 +61,7 @@ public class PerfilController {
 
             comprador.setId(compradorRepository.findByCpf(perfilFromDb.getCpf()).getId());
             comprador.setNome(perfil.getNome());
-            comprador.setCpf(perfil.getCpf());
+            comprador.setCpf(perfilFromDb.getCpf());
             comprador.setAtivo(1);
             comprador.setUsuario(usuarioRepository.findByEmailAndSenha(user.getEmail(), user.getSenha()));
 

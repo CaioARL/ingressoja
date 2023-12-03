@@ -10,14 +10,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.fasterxml.jackson.annotation.JsonCreator.Mode;
-
-import br.com.bd.ingressoja.model.Administrador;
-import br.com.bd.ingressoja.model.Comprador;
 import br.com.bd.ingressoja.model.Usuario;
 import br.com.bd.ingressoja.model.dto.UserDto;
 import br.com.bd.ingressoja.repository.AdministradorRepository;
-import br.com.bd.ingressoja.repository.CompradorRepository;
 import br.com.bd.ingressoja.repository.UsuarioRepository;
 
 @Controller
@@ -26,14 +21,12 @@ public class LoginController {
   private static final String REDIRECT_HOME = "redirect:/ingressoja/home";
   private HttpSession httpSession;
   private UsuarioRepository loginRepository;
-  private CompradorRepository compradorRepository;
   private AdministradorRepository administradorRepository;
 
   public LoginController(HttpSession httpSession, UsuarioRepository loginRepository,
-      CompradorRepository compradorRepository, AdministradorRepository administradorRepository) {
+      AdministradorRepository administradorRepository) {
     this.httpSession = httpSession;
     this.loginRepository = loginRepository;
-    this.compradorRepository = compradorRepository;
     this.administradorRepository = administradorRepository;
   }
 
@@ -50,7 +43,7 @@ public class LoginController {
     if (Objects.nonNull(userDto)) {
       httpSession.setAttribute("user", userDto);
       modelAndView.setViewName(REDIRECT_HOME);
-      modelAndView = getTipoUsuario(userDto, modelAndView);
+      httpSession.setAttribute("isAdm", administradorRepository.findByUsuario(userDto) != null);
     } else {
       userDto = loginRepository.findByEmail(user.getEmail());
       modelAndView.setViewName("login");
@@ -77,14 +70,5 @@ public class LoginController {
       httpSession.setAttribute("expired", true);
     }
     return REDIRECT_HOME;
-  }
-
-  private ModelAndView getTipoUsuario(Usuario usuario, ModelAndView modelAndView) {
-    Comprador comprador = compradorRepository.findByUsuario(usuario);
-    Administrador administrador = administradorRepository.findByUsuario(usuario);
-
-    modelAndView.addObject("isAdm", administrador != null);
-    modelAndView.addObject("isComprador", comprador != null);
-    return modelAndView;
   }
 }

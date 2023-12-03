@@ -47,6 +47,7 @@
     </button>
     <ul class="dropdown-menu dropdown-menu-dark">
       <li><a class="dropdown-item active bi-person-circle" href="/ingressoja/editarPerfil"> Editar perfil</a></li>
+      <li th:if="${isAdm}"><a class="dropdown-item bi-book" href="#"> Catálogo</a></li>
       <li><hr class="dropdown-divider"></li>
       <li><a id="logoutAccount" class="dropdown-item bi-box-arrow-right"> Logout</a></li>
     </ul>
@@ -135,7 +136,7 @@
         <div class="modal-header">
           <h5 class="modal-title" id="confirmLogoutModalLabel">Confirmação de Saída</h5>
         </div>
-        <div class="modal-body" style="color: black;">
+        <div class="modal-body">
           Tem certeza de que deseja sair sua conta? <br>
         </div>
         <div class="modal-footer">
@@ -144,7 +145,6 @@
       </div>
     </div>
   </div>
-
 </body>
 
 </html>
