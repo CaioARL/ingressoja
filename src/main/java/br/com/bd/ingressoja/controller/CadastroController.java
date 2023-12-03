@@ -10,7 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import br.com.bd.ingressoja.model.Comprador;
 import br.com.bd.ingressoja.model.Usuario;
-import br.com.bd.ingressoja.model.dto.CompradorDto;
+import br.com.bd.ingressoja.model.dto.PerfilDto;
 import br.com.bd.ingressoja.repository.CompradorRepository;
 import br.com.bd.ingressoja.repository.UsuarioRepository;
 
@@ -32,28 +32,28 @@ public class CadastroController {
     }
 
     @PostMapping("/cadastro")
-    public ModelAndView cadastroPost(CompradorDto compradorDto) {
+    public ModelAndView cadastroPost(PerfilDto perfilDto) {
 
-        compradorDto.setCpf(compradorDto.getCpf().replaceAll("[^0-9]", ""));
+        perfilDto.setCpf(perfilDto.getCpf().replaceAll("[^0-9]", ""));
 
         ModelAndView modelAndView = new ModelAndView();
-        if (validateCPF(compradorDto.getCpf())) {
+        if (validateCPF(perfilDto.getCpf())) {
 
-            Comprador cpFromBd = compradorRepository.findByCpf(compradorDto.getCpf());
+            Comprador cpFromBd = compradorRepository.findByCpf(perfilDto.getCpf());
 
             if (cpFromBd == null) {
                 Comprador cp = new Comprador();
                 cp.setId(compradorRepository.findNextId());
-                cp.setNome(compradorDto.getNome());
-                cp.setCpf(compradorDto.getCpf());
+                cp.setNome(perfilDto.getNome());
+                cp.setCpf(perfilDto.getCpf());
                 cp.setAtivo(1);
 
-                Usuario usuario = usuarioRepository.findByEmailAndSenha(compradorDto.getEmail(),
-                        compradorDto.getSenha());
+                Usuario usuario = usuarioRepository.findByEmailAndSenha(perfilDto.getEmail(),
+                        perfilDto.getSenha());
 
                 if (usuario == null) {
-                    usuario = new Usuario(usuarioRepository.findNextId(), compradorDto.getEmail(),
-                            compradorDto.getSenha());
+                    usuario = new Usuario(usuarioRepository.findNextId(), perfilDto.getEmail(),
+                            perfilDto.getSenha());
 
                     usuarioRepository.save(usuario);
                 }
@@ -70,8 +70,8 @@ public class CadastroController {
             }
         } else {
             modelAndView.setViewName("/cadastro");
-            compradorDto.setCpf(compradorDto.getCpf().replaceAll("(\\d{3})(\\d{3})(\\d{3})(\\d{2})", "$1.$2.$3-$4"));
-            modelAndView.addObject("usuario", compradorDto);
+            perfilDto.setCpf(perfilDto.getCpf().replaceAll("(\\d{3})(\\d{3})(\\d{3})(\\d{2})", "$1.$2.$3-$4"));
+            modelAndView.addObject("usuario", perfilDto);
             modelAndView.addObject("cpfInvalid", true);
         }
         return modelAndView;

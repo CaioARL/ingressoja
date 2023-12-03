@@ -8,9 +8,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import br.com.bd.ingressoja.model.Administrador;
 import br.com.bd.ingressoja.model.Comprador;
 import br.com.bd.ingressoja.model.Usuario;
-import br.com.bd.ingressoja.model.dto.CompradorDto;
+import br.com.bd.ingressoja.model.dto.PerfilDto;
+import br.com.bd.ingressoja.repository.AdministradorRepository;
 import br.com.bd.ingressoja.repository.CompradorRepository;
 import br.com.bd.ingressoja.repository.UsuarioRepository;
 
@@ -22,12 +24,14 @@ public class PerfilController {
     private HttpSession httpSession;
     private CompradorRepository compradorRepository;
     private UsuarioRepository usuarioRepository;
+    private AdministradorRepository administradorRepository;
 
     public PerfilController(HttpSession httpSession, CompradorRepository compradorRepository,
-            UsuarioRepository usuarioRepository) {
+            UsuarioRepository usuarioRepository, AdministradorRepository administradorRepository) {
         this.httpSession = httpSession;
         this.compradorRepository = compradorRepository;
         this.usuarioRepository = usuarioRepository;
+        this.administradorRepository = administradorRepository;
     }
 
     @GetMapping("/editarPerfil")
@@ -35,19 +39,22 @@ public class PerfilController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName(PERFIL_VIEW);
         Usuario user = (Usuario) httpSession.getAttribute("user");
-        CompradorDto perfil = compradorRepository.findByEmailAndSenha(user.getEmail(), user.getSenha());
+
+        PerfilDto perfil = compradorRepository.findByEmailAndSenha(user.getEmail(), user.getSenha()) != null
+                ? compradorRepository.findByEmailAndSenha(user.getEmail(), user.getSenha()).toPerfildto()
+                : administradorRepository.findByEmailAndSenha(user.getEmail(), user.getSenha()).toPerfildto();
 
         modelAndView.addObject(PERFIL_VIEW, perfil);
         return modelAndView;
     }
 
     @PostMapping("/editarPerfil")
-    public ModelAndView editarPerfil(CompradorDto perfil) {
+    public ModelAndView editarPerfil(PerfilDto perfil) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName(PERFIL_VIEW);
 
         Usuario user = (Usuario) httpSession.getAttribute("user");
-        CompradorDto perfilFromDb = compradorRepository.findByEmailAndSenha(user.getEmail(), user.getSenha());
+        PerfilDto perfilFromDb = compradorRepository.findByEmailAndSenha(user.getEmail(), user.getSenha()).toPerfildto();
 
         if (!perfilFromDb.getNome().equals(perfil.getNome())) {
             Comprador comprador = new Comprador();
@@ -81,18 +88,26 @@ public class PerfilController {
             modelAndView.addObject(UPDATED, false);
         }
 
-        perfil = compradorRepository.findByEmailAndSenha(user.getEmail(), user.getSenha());
+        perfil = compradorRepository.findByEmailAndSenha(user.getEmail(), user.getSenha()).toPerfildto();
         modelAndView.addObject(PERFIL_VIEW, perfil);
         return modelAndView;
     }
 
     @GetMapping("/excluirConta")
-    public ModelAndView excluirConta(String cpf){
+    public ModelAndView excluirConta(String nome, String email) {
         ModelAndView modelAndView = new ModelAndView();
+        
+        Usuario user = (Usuario) httpSession.getAttribute("user");
 
-        Comprador comprador = compradorRepository.findByCpf(cpf);
-        compradorRepository.delete(comprador);
-        usuarioRepository.delete(comprador.getUsuario());
+        Comprador comprador = compradorRepository.findByUsuario(user);
+        Administrador administrador = administradorRepository.findByUsuario(user);
+
+        if(comprador!=null){
+            compradorRepository.delete(comprador);
+        }else if(administrador!=null){
+            administradorRepository.delete(administrador);
+        }
+        usuarioRepository.delete(user);
 
         httpSession.invalidate();
         modelAndView.setViewName("login");

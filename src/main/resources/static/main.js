@@ -92,8 +92,8 @@ document.addEventListener("DOMContentLoaded", function () {
 // Máscara para o CPF
 window.onload = function () {
   let cpfField = document.getElementById('cpfPerfil');
-  window.vg_cpf = cpfField.value;
-  let maskedCpf = vg_cpf.substr(0, 3) + '.***.***-**';
+  let cpf = cpfField.value;
+  let maskedCpf = cpf.substr(0, 3) + '.***.***-**';
   cpfField.value = maskedCpf;
 }
 
@@ -108,7 +108,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function deleteAccount() {
-  window.location.href = "/ingressoja/excluirConta?cpf=" + vg_cpf;
+  window.location.href = "/ingressoja/excluirConta";
 }
 
 function selecionarEvento(titleEvento) {

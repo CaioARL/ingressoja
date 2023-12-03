@@ -9,9 +9,12 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class PerfilDto {
+public class AdministradorDto {
     private String nome;
-    private String cpf;
     private String email;
     private String senha;
+
+    public PerfilDto toPerfildto() {
+    return new PerfilDto(this.nome, null, this.email, this.senha);
+}
 }

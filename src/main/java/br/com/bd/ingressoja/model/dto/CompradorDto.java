@@ -14,4 +14,8 @@ public class CompradorDto {
   private String cpf;
   private String email;
   private String senha;
+
+  public PerfilDto toPerfildto() {
+    return new PerfilDto(this.nome, this.cpf, this.email, this.senha);
+}
 }
