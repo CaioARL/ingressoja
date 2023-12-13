@@ -39,7 +39,7 @@
   </div>
 
   <div th:if="${logado == true && expired == false}">
-    <div style="text-align: center;">
+    <div th:if="${logado == true && contLogin <= 1}" style="text-align: center;">
       <span class="alert alert-success">Login realizado com sucesso</span>
     </div>
     <button class="menu-bar btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">

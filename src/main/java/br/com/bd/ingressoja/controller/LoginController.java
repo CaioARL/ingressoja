@@ -4,6 +4,7 @@ import java.util.Objects;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,13 +38,15 @@ public class LoginController {
 
   @PostMapping("/login")
   public ModelAndView login(UserDto user) {
+    BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     ModelAndView modelAndView = new ModelAndView();
-    Usuario userDto = loginRepository.findByEmailAndSenha(user.getEmail(), user.getSenha());
+    Usuario userDto = loginRepository.findByEmail(user.getEmail());
 
-    if (Objects.nonNull(userDto)) {
+    if (Objects.nonNull(userDto) && passwordEncoder.matches(user.getSenha(), userDto.getSenha())) {
       httpSession.setAttribute("user", userDto);
       modelAndView.setViewName(REDIRECT_HOME);
       httpSession.setAttribute("isAdm", administradorRepository.findByUsuario(userDto) != null);
+      httpSession.setAttribute("contLogin", 0);
     } else {
       userDto = loginRepository.findByEmail(user.getEmail());
       modelAndView.setViewName("login");
@@ -60,6 +63,7 @@ public class LoginController {
   public String logout() {
     httpSession.invalidate();
     httpSession.setAttribute("exit", true);
+    httpSession.setAttribute("contLogin", 0);
     return REDIRECT_HOME;
   }
 

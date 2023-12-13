@@ -4,6 +4,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
+import br.com.bd.ingressoja.model.dto.PerfilDto;
+
 import java.io.Serializable;
 
 import javax.persistence.Column;
@@ -35,4 +37,8 @@ public class Comprador implements Serializable {
   @OneToOne
   @JoinColumn(name = "fk_Usuario_id", referencedColumnName = "id")
   private Usuario usuario;
+
+  public PerfilDto toPerfildto() {
+    return new PerfilDto(this.nome, this.cpf, this.usuario.getEmail(), this.usuario.getSenha());
+    }
 }

@@ -65,8 +65,8 @@
     <div class="mb-3">
       <label for="senha" class="form-label">Senha</label>
       <div class="input-group">
-        <input id="senha" type="password" class="form-control border-right-0" th:value="${perfil.senha}" name="senha"
-          minlength="8" maxlength="20" required>
+        <input id="senha" type="password" class="form-control border-right-0" name="senha"
+          minlength="8" maxlength="20" required autocomplete="off" value="">
         <div class="input-group-append">
           <span class="form-control border-right-0">
             <i id="togglePassword" class="fa fa-eye"></i>

@@ -25,7 +25,7 @@ public class HomeController {
         Object expirado = httpSession.getAttribute("expired");
         Object user = httpSession.getAttribute("user");
         Object exit = httpSession.getAttribute("exit");
-        Object isAdm = httpSession.getAttribute("isAdm");
+        Object isAdm = httpSession.getAttribute("isAdm");        
 
         if (expirado != null) {
             modelAndView.addObject("expired", true);
@@ -41,7 +41,9 @@ public class HomeController {
             modelAndView.addObject("exit", true);
             httpSession.removeAttribute("exit");
         }
-
+        httpSession.setAttribute("contLogin", httpSession.getAttribute("contLogin") == null ? 1
+                : (int) httpSession.getAttribute("contLogin") + 1);
+        modelAndView.addObject("contLogin", httpSession.getAttribute("contLogin"));
         return modelAndView;
     }
 

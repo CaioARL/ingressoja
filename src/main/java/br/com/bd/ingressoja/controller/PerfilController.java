@@ -2,6 +2,8 @@ package br.com.bd.ingressoja.controller;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,9 +42,9 @@ public class PerfilController {
         modelAndView.setViewName(PERFIL_VIEW);
         Usuario user = (Usuario) httpSession.getAttribute("user");
 
-        PerfilDto perfil = compradorRepository.findByEmailAndSenha(user.getEmail(), user.getSenha()) != null
-                ? compradorRepository.findByEmailAndSenha(user.getEmail(), user.getSenha()).toPerfildto()
-                : administradorRepository.findByEmailAndSenha(user.getEmail(), user.getSenha()).toPerfildto();
+        PerfilDto perfil = compradorRepository.findByUsuario(user) != null
+                ? compradorRepository.findByUsuario(user).toPerfildto()
+                : administradorRepository.findByUsuario(user).toPerfildto();
 
         modelAndView.addObject(PERFIL_VIEW, perfil);
         return modelAndView;
@@ -50,11 +52,12 @@ public class PerfilController {
 
     @PostMapping("/editarPerfil")
     public ModelAndView editarPerfil(PerfilDto perfil) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName(PERFIL_VIEW);
 
         Usuario user = (Usuario) httpSession.getAttribute("user");
-        PerfilDto perfilFromDb = compradorRepository.findByEmailAndSenha(user.getEmail(), user.getSenha()).toPerfildto();
+        PerfilDto perfilFromDb = compradorRepository.findByUsuario(user).toPerfildto();
 
         if (!perfilFromDb.getNome().equals(perfil.getNome())) {
             Comprador comprador = new Comprador();
@@ -63,20 +66,20 @@ public class PerfilController {
             comprador.setNome(perfil.getNome());
             comprador.setCpf(perfilFromDb.getCpf());
             comprador.setAtivo(1);
-            comprador.setUsuario(usuarioRepository.findByEmailAndSenha(user.getEmail(), user.getSenha()));
+            comprador.setUsuario(usuarioRepository.findByEmail(user.getEmail()));
 
             compradorRepository.save(comprador);
 
             modelAndView.addObject(UPDATED, true);
         } else if (!perfilFromDb.getEmail().equals(perfil.getEmail())
-                || !perfilFromDb.getSenha().equals(perfil.getSenha())) {
+                || !passwordEncoder.matches(perfil.getSenha(), perfilFromDb.getSenha())) {
 
             Usuario usuario = new Usuario();
 
             usuario.setId(
-                    usuarioRepository.findByEmailAndSenha(perfilFromDb.getEmail(), perfilFromDb.getSenha()).getId());
+                    usuarioRepository.findByEmail(perfilFromDb.getEmail()).getId());
             usuario.setEmail(perfil.getEmail());
-            usuario.setSenha(perfil.getSenha());
+            usuario.setSenha(passwordEncoder.encode(perfil.getSenha()));
 
             usuarioRepository.save(usuario);
 
@@ -88,7 +91,7 @@ public class PerfilController {
             modelAndView.addObject(UPDATED, false);
         }
 
-        perfil = compradorRepository.findByEmailAndSenha(user.getEmail(), user.getSenha()).toPerfildto();
+        perfil = compradorRepository.findByUsuario(user).toPerfildto();
         modelAndView.addObject(PERFIL_VIEW, perfil);
         return modelAndView;
     }

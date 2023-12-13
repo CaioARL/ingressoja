@@ -6,6 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
+import br.com.bd.ingressoja.model.dto.PerfilDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,4 +32,8 @@ public class Administrador {
     @OneToOne
     @JoinColumn(name = "fk_Usuario_id", referencedColumnName = "id")
     private Usuario usuario;
+
+    public PerfilDto toPerfildto() {
+    return new PerfilDto(this.nome, null, this.usuario.getEmail(), this.usuario.getSenha());
+    }
 }
